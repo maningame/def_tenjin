@@ -49,17 +49,15 @@ static jclass GetClass(JNIEnv* env, const char* classname)
 
 static jobject GetActivity(JNIEnv* env)
 {
-    jobject activity = 0;
-    jobject ctx = dmScript::GetApplicationContext(env);
-    if (ctx)
+    ANativeActivity* native_activity = dmAndroid::GetActivity();
+    if (!native_activity)
     {
-        jclass context_cls = env->FindClass("android/content/Context");
-        jmethodID get_activity = env->GetMethodID(context_cls, "getApplicationContext", "()Landroid/content/Context;");
-        if (get_activity)
-            activity = env->CallObjectMethod(ctx, get_activity);
-        env->DeleteLocalRef(context_cls);
+        dmLogError("Unable to get native activity.");
+        return 0;
     }
-    return activity;
+
+    // Возвращаем clazz, который в Defold используется как jobject Activity
+    return native_activity->clazz;
 }
 
 void Tenjin_Init(const char*api_key, bool gdpr_consent)
