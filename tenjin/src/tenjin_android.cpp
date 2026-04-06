@@ -57,7 +57,10 @@ void Tenjin_Init(const char*api_key, bool gdpr_consent)
 
     jstring key = env->NewStringUTF(api_key);
 
-    env->CallStaticVoidMethod(cls, method, dmGraphics::GetNativeAndroidActivity(), key, gdpr_consent ? JNI_TRUE : JNI_FALSE);
+    ANativeActivity* activity = dmAndroid::GetActivity();
+    jobject appActivity = activity->clazz;
+
+    env->CallStaticVoidMethod(cls, method, appActivity, key, gdpr_consent ? JNI_TRUE : JNI_FALSE);
 
     env->DeleteLocalRef(key);
 }
