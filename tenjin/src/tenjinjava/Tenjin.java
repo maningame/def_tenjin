@@ -12,6 +12,8 @@ class Tenjin {
     private static TenjinSDK tenjinInstance;
 
     public static final void Init(Activity appActivity, String apiKey, boolean consent) {
+        Log.d(TAG, "Init 1");
+
         tenjinInstance = TenjinSDK.getInstance(appActivity, apiKey);
         tenjinInstance.setAppStore(TenjinSDK.AppStoreType.googleplay);
 
@@ -24,7 +26,7 @@ class Tenjin {
 
         tenjinInstance.connect();
 
-        Log.d(TAG, "Init");
+        Log.d(TAG, "Init 2");
     }
 
     public static final void CustomEvent(String eventName) {
