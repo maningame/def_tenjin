@@ -14,19 +14,25 @@ class Tenjin {
     public static final void Init(Activity appActivity, String apiKey, boolean consent) {
         Log.d(TAG, "Init 1");
 
-        tenjinInstance = TenjinSDK.getInstance(appActivity, apiKey);
-        tenjinInstance.setAppStore(TenjinSDK.AppStoreType.googleplay);
+        try {
+            Log.d(TAG, "Init 2");
+            tenjinInstance = TenjinSDK.getInstance(appActivity, apiKey);
+            tenjinInstance.setAppStore(TenjinSDK.AppStoreType.googleplay);
 
-        if (consent) {
-            tenjinInstance.optIn();
+            if (consent) {
+                tenjinInstance.optIn();
+            }
+            else {
+                tenjinInstance.optOut();
+            }
+
+            tenjinInstance.connect();
+        } catch (Exception e) {
+            Log.d(TAG, "Init 3");
+            Log.e(TAG, "Tenjin error", e);
         }
-        else {
-            tenjinInstance.optOut();
-        }
 
-        tenjinInstance.connect();
-
-        Log.d(TAG, "Init 2");
+        Log.d(TAG, "Init 4");
     }
 
     public static final void CustomEvent(String eventName) {
