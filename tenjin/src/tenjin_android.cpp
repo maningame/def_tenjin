@@ -54,7 +54,7 @@ void Tenjin_Init(const char*api_key, bool gdpr_consent)
     JNIEnv* env = attachscope.m_Env;
 
     jclass cls = GetClass(env, "com.anvil.tenjin.Tenjin");
-    jmethodID method = env->GetStaticMethodID(cls, "Init", "(Landroid/app/Activity;Ljava/lang/String;Z)V");
+    jmethodID method = env->GetStaticMethodID(cls, "Init", "(Landroid/content/Context;Ljava/lang/String;Z)V");
 
     jstring key = env->NewStringUTF(api_key);
 
