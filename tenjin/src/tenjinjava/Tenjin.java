@@ -10,7 +10,8 @@ class Tenjin {
 
     public static final void Init(Activity appActivity, String apiKey, boolean consent) {
         tenjinInstance = TenjinSDK.getInstance(appActivity, apiKey);
-        
+        tenjinInstance.setAppStore(TenjinSDK.AppStoreType.googleplay);
+
         if (consent) {
             tenjinInstance.optIn();
         }
@@ -18,7 +19,7 @@ class Tenjin {
             tenjinInstance.optOut();
         }
 
-        tenjinInstance.connect();  
+        tenjinInstance.connect();
     }
 
     public static final void CustomEvent(String eventName) {
