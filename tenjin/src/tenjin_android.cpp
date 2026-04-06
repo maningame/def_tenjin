@@ -47,6 +47,21 @@ static jclass GetClass(JNIEnv* env, const char* classname)
     return outcls;
 }
 
+static jobject GetActivity(JNIEnv* env)
+{
+    jobject activity = 0;
+    jobject ctx = dmScript::GetApplicationContext(env);
+    if (ctx)
+    {
+        jclass context_cls = env->FindClass("android/content/Context");
+        jmethodID get_activity = env->GetMethodID(context_cls, "getApplicationContext", "()Landroid/content/Context;");
+        if (get_activity)
+            activity = env->CallObjectMethod(ctx, get_activity);
+        env->DeleteLocalRef(context_cls);
+    }
+    return activity;
+}
+
 void Tenjin_Init(const char*api_key, bool gdpr_consent)
 {
     AttachScope attachscope;
@@ -57,10 +72,9 @@ void Tenjin_Init(const char*api_key, bool gdpr_consent)
 
     jstring key = env->NewStringUTF(api_key);
 
-    ANativeActivity* activity = dmAndroid::GetActivity();
-    jobject appActivity = activity->clazz;
+    jobject activity = GetActivity(env);
 
-    env->CallStaticVoidMethod(cls, method, appActivity, key, gdpr_consent ? JNI_TRUE : JNI_FALSE);
+    env->CallStaticVoidMethod(cls, method, activity, key, gdpr_consent ? JNI_TRUE : JNI_FALSE);
 
     env->DeleteLocalRef(key);
 }
