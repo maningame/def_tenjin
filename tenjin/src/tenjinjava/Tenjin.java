@@ -2,15 +2,18 @@ package com.anvil.tenjin;
 
 import android.app.Activity;
 
+import android.util.Log;
+
 import com.tenjin.android.TenjinSDK;
 
 class Tenjin {
+    public static final String TAG = "extension_tenjin";
 
     private static TenjinSDK tenjinInstance;
 
     public static final void Init(Activity appActivity, String apiKey, boolean consent) {
         tenjinInstance = TenjinSDK.getInstance(appActivity, apiKey);
-        tenjinInstance.setDebugMode(true);
+        tenjinInstance.eventDebugLogs();
         tenjinInstance.setAppStore(TenjinSDK.AppStoreType.googleplay);
 
         if (consent) {
@@ -21,9 +24,12 @@ class Tenjin {
         }
 
         tenjinInstance.connect();
+
+        Log.d(TAG, "Init");
     }
 
     public static final void CustomEvent(String eventName) {
+        Log.d(TAG, "CustomEvent");
         tenjinInstance.eventWithName(eventName);
     }
 
