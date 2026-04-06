@@ -72,7 +72,7 @@ void Tenjin_CustomEvent(const char*event_name)
 
     jstring eventName = env->NewStringUTF(event_name);
 
-    env->CallStaticObjectMethod(cls, method, eventName);
+    env->CallStaticVoidMethod(cls, method, eventName);
 
     env->DeleteLocalRef(eventName);
 }
@@ -88,7 +88,7 @@ void Tenjin_CustomEventWithValue(const char*event_name, const char*event_value)
     jstring eventName = env->NewStringUTF(event_name);
     jstring eventValue = env->NewStringUTF(event_value);
 
-    env->CallStaticObjectMethod(cls, method, eventName, eventValue);
+    env->CallStaticVoidMethod(cls, method, eventName, eventValue);
 
     env->DeleteLocalRef(eventName);
     env->DeleteLocalRef(eventValue);
@@ -105,7 +105,7 @@ void Tenjin_PurchaseEvent(const char* product_id, const char* currency_code, con
     jstring productId = env->NewStringUTF(product_id);
     jstring currencyCode = env->NewStringUTF(currency_code);
 
-    env->CallStaticObjectMethod(cls, method, productId, currencyCode, quantity, price);
+    env->CallStaticVoidMethod(cls, method, productId, currencyCode, quantity, price);
 
     env->DeleteLocalRef(productId);
     env->DeleteLocalRef(currencyCode);
