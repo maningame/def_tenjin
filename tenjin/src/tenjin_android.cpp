@@ -56,8 +56,8 @@ void Tenjin_Init(const char*api_key, bool gdpr_consent)
     jmethodID method = env->GetStaticMethodID(cls, "Init", "(Landroid/app/Activity;Ljava/lang/String;Z)V");
 
     jstring key = env->NewStringUTF(api_key);
-    
-    env->CallStaticObjectMethod(cls, method, dmGraphics::GetNativeAndroidActivity(), key, gdpr_consent ? JNI_TRUE : JNI_FALSE);
+
+    env->CallStaticVoidMethodV(cls, method, dmGraphics::GetNativeAndroidActivity(), key, gdpr_consent ? JNI_TRUE : JNI_FALSE);
 
     env->DeleteLocalRef(key);
 }
@@ -69,7 +69,7 @@ void Tenjin_CustomEvent(const char*event_name)
 
     jclass cls = GetClass(env, "com.anvil.tenjin.Tenjin");
     jmethodID method = env->GetStaticMethodID(cls, "CustomEvent", "(Ljava/lang/String;)V");
-    
+
     jstring eventName = env->NewStringUTF(event_name);
 
     env->CallStaticObjectMethod(cls, method, eventName);
