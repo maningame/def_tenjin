@@ -16,8 +16,12 @@ class Tenjin {
 
         try {
             Log.d(TAG, "Init 2");
+            Log.d(TAG, "Before getInstance");
             tenjinInstance = TenjinSDK.getInstance(appActivity, apiKey);
+            Log.d(TAG, "After getInstance");
+            Log.d(TAG, "Before setAppStore");
             tenjinInstance.setAppStore(TenjinSDK.AppStoreType.googleplay);
+            Log.d(TAG, "After setAppStore");
 
             if (consent) {
                 tenjinInstance.optIn();
