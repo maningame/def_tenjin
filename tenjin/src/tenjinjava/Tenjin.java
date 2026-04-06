@@ -13,7 +13,6 @@ class Tenjin {
 
     public static final void Init(Activity appActivity, String apiKey, boolean consent) {
         tenjinInstance = TenjinSDK.getInstance(appActivity, apiKey);
-        tenjinInstance.eventDebugLogs();
         tenjinInstance.setAppStore(TenjinSDK.AppStoreType.googleplay);
 
         if (consent) {
