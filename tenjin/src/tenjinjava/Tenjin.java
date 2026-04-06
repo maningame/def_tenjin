@@ -11,13 +11,13 @@ class Tenjin {
 
     private static TenjinSDK tenjinInstance;
 
-    public static final void Init(Activity appActivity, String apiKey, boolean consent) {
+    public static final void Init(Context context, String apiKey, boolean consent) {
         Log.d(TAG, "Init 1");
 
         try {
             Log.d(TAG, "Init 2");
             Log.d(TAG, "Before getInstance");
-            tenjinInstance = TenjinSDK.getInstance(appActivity, apiKey);
+            tenjinInstance = TenjinSDK.getInstance(context, apiKey);
             Log.d(TAG, "After getInstance");
             Log.d(TAG, "Before setAppStore");
             tenjinInstance.setAppStore(TenjinSDK.AppStoreType.googleplay);

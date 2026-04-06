@@ -48,19 +48,6 @@ static jclass GetClass(JNIEnv* env, const char* classname)
     return outcls;
 }
 
-static jobject GetActivity(JNIEnv* env)
-{
-    ANativeActivity* native_activity = dmAndroid::GetActivity();
-    if (!native_activity)
-    {
-        dmLogError("Unable to get native activity.");
-        return 0;
-    }
-
-    // Возвращаем clazz, который в Defold используется как jobject Activity
-    return native_activity->clazz;
-}
-
 void Tenjin_Init(const char*api_key, bool gdpr_consent)
 {
     AttachScope attachscope;
@@ -71,9 +58,9 @@ void Tenjin_Init(const char*api_key, bool gdpr_consent)
 
     jstring key = env->NewStringUTF(api_key);
 
-    jobject activity = GetActivity(env);
+    jobject context = dmGraphics::GetNativeAndroidActivity();
 
-    env->CallStaticVoidMethod(cls, method, activity, key, gdpr_consent ? JNI_TRUE : JNI_FALSE);
+    env->CallStaticVoidMethod(cls, method, context, key, gdpr_consent ? JNI_TRUE : JNI_FALSE);
 
     env->DeleteLocalRef(key);
 }
